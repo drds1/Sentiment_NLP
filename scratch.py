@@ -6,7 +6,31 @@ from sklearn import metrics
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import plot_confusion_matrix
+import matplotlib.pylab as plt
+from sklearn.naive_bayes import MultinomialNB
 import numpy as np
+
+
+def count_kw(dat,column = 'keyword'):
+
+    kwnon = dat[(dat[column] != dat[column])]['target'].value_counts()
+    kwnon.index = ['no '+column+' '+ str(i) for i in kwnon.index]
+    kwinc = dat[(dat[column] == dat[column])]['target'].value_counts()
+    kwinc.index = ['yes ' + column + ' ' + str(i) for i in kwinc.index]
+    return kwnon.append(kwinc)
+
+def keyword_study(data):
+    '''
+
+    :param kw:
+    :param file:
+    :return:
+    '''
+    countloc = count_kw(data,column = 'location')
+    countkw = count_kw(data,column='keyword')
+    counts = countloc.append(countkw)
+    return counts
 
 class nlp_model:
 
@@ -16,6 +40,7 @@ class nlp_model:
         self.model = Pipeline([
             ('vect', CountVectorizer()),
             ('tfidf', TfidfTransformer()),
+            #('clf',MultinomialNB()),
             ('clf', SGDClassifier(loss='hinge', penalty='l2',
                                   alpha=1e-3, random_state=42,
                                   max_iter=5, tol=None)),
@@ -38,6 +63,9 @@ class nlp_model:
             print('most common locations...\n', locations.head(10))
             print('\nleast common locations...\n', locations.tail(10))
             print('\n\n\n')
+            #differences between keyword / not keyword
+            print('keyword/keyloc breakdown...')
+            print(keyword_study(self.train))
 
 
     def assemble_X_y(self,add_loc = True,add_keyword = True):
@@ -84,9 +112,12 @@ class nlp_model:
             print()
 
 
-    def gridsearch_model(self,parameters = {'vect__ngram_range': [(1, 1), (1, 2)],
-                                     'tfidf__use_idf': (True, False),
-                                     'clf__alpha': (1e-2, 1e-3)},
+    def gridsearch_model(self,parameters = {'vect__ngram_range': [(1, 1),
+                                                                  (1, 2)],
+                                     'tfidf__use_idf': (True,
+                                                        False),
+                                     'clf__alpha': (1e-2,
+                                                    1e-3)},
                          verbose = True):
         '''now try SVM model'''
         #self.model.fit(self.X_train, self.y_train)
@@ -105,6 +136,11 @@ class nlp_model:
         print(metrics.classification_report(target, predicted,target_names=names))
 
 
+
+
+
+
+
 if __name__ == '__main__':
     cl =nlp_model()
     cl.load_data(verbose = False)
@@ -112,8 +148,22 @@ if __name__ == '__main__':
     cl.split_train_test(verbose = False)
     cl.gridsearch_model()
 
-    print(metrics.classification_report(cl.y_test,cl.model_gs.predict(cl.X_test)))
+    truths = cl.y_test
+    predictions = cl.model_gs.predict(cl.X_test)
+    print(metrics.classification_report(truths,predictions))
 
+    #report some of the failed predictions
+    idx_fail = predictions != cl.y_test
+    X_test_fail = cl.X_test[idx_fail]
+    pd.DataFrame({'text':X_test_fail,
+                  'label':cl.y_test[idx_fail]}).to_csv('failures.csv')
+
+    #plot confusion matrix
+    plt.close()
+    plot_confusion_matrix(cl.model_gs, cl.X_test, cl.y_test,
+                          #display_labels=class_names,
+                          cmap=plt.cm.Blues)
+    plt.savefig('confusion_matrix.pdf')
 
 
 
