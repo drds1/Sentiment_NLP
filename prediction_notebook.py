@@ -41,9 +41,9 @@ def remove_url(raw_str):
 # In[ ]:
 
 
-sample_submission = pd.read_csv("../input/nlp-getting-started/sample_submission.csv")
-train_df = pd.read_csv("../input/nlp-getting-started/train.csv")
-test_df = pd.read_csv("../input/nlp-getting-started/test.csv")
+sample_submission = pd.read_csv("./data/sample_submission.csv")
+train_df = pd.read_csv("./data/train.csv")
+test_df = pd.read_csv("./data/test.csv")
 
 
 # In[ ]:
