@@ -471,7 +471,7 @@ if __name__ == '__main__':
     y.load_data(train_text= train_text, train_target= train_target,
                 test_text= test_text,
                 glove_file= './data/glove.6B.100d.txt')
-    y.run()
+    #y.run()
     #y.predict(['disaster strikes plague fire'])
     #y.predict(["isn't it a lovely day today"])
 
