@@ -2,7 +2,8 @@ import re
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 import matplotlib.pyplot as plt
 import numpy as np
-
+import os
+from keras.models import model_from_json
 stopwords = list(STOPWORDS) + ['will', 'may', 'one', 'now', 'nan', 'don']  # + lower_loc
 
 
@@ -446,7 +447,34 @@ def result_eva(loss, val_loss, acc, val_acc,file='result_eva.pdf'):
     plt.savefig('acc_'+file)
     #plt.show()
 
+def save_model(keras_model, output_dir='saved_model'):
+    '''
+    save the nlp model
+    :return:
+    '''
+    os.system("rm -rf "+output_dir)
+    os.system("mkdir "+output_dir)
+    # serialize model to JSON
+    model_json = keras_model.to_json()
+    with open(output_dir+"/"+output_dir+".json", "w") as json_file:
+        json_file.write(model_json)
+    # serialize weights to HDF5
+    keras_model.save_weights(output_dir+"/"+output_dir+".h5")
+    print("Saved model to disk")
 
+
+def load_model(input_model = 'saved_model'):
+    # later...
+
+    # load json and create model
+    json_file = open(input_model+"/"+input_model+".json", 'r')
+    loaded_model_json = json_file.read()
+    json_file.close()
+    loaded_model = model_from_json(loaded_model_json)
+    # load weights into new model
+    loaded_model.load_weights(input_model+"/"+input_model+".h5")
+    print("Loaded model from disk")
+    return loaded_model
 
 
 class wc_base2:

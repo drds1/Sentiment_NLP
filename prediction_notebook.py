@@ -13,6 +13,7 @@ from keras.models import Model
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
 from keras.utils import to_categorical
+from keras.models import model_from_json
 from numpy import array
 from numpy import asarray
 from numpy import zeros
@@ -34,6 +35,7 @@ class Nlp_Tweets:
 
     def __init__(self):
         self.output_submission = 'output_submission.csv'
+        self.load_past_model = None
         self.train_df = None
         self.test_df = None
         self.glove_file = None
@@ -332,13 +334,28 @@ class Nlp_Tweets:
                       metrics=["accuracy"])
 
         es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=3)
-        history = model.fit([X_train_tx, X_train_ky, X_train_lc], Y_train,
+
+
+        #save tokenizer and (needed to predict future entries)
+        self.tok = tok
+        self.max_words = max_words
+        self.max_words_ky = max_words_ky
+        self.max_words_lc = max_words_lc
+
+
+        if self.load_past_model is None:
+            history = model.fit([X_train_tx, X_train_ky, X_train_lc], Y_train,
                             validation_split=self.validation_split, epochs=self.epochs,
                             batch_size=self.batch_size,
                             verbose=2, callbacks=[es])
+            pu.result_eva(history.history['loss'], history.history['val_loss'], history.history['accuracy'],
+                          history.history['val_accuracy'])
+        else:
+            model = pu.load_model(self.load_past_model)
 
-        pu.result_eva(history.history['loss'], history.history['val_loss'], history.history['accuracy'],
-                   history.history['val_accuracy'])
+
+
+
 
         model.save('nlp_disaster.h5')
 
@@ -355,11 +372,7 @@ class Nlp_Tweets:
         result.tail()
         result.to_csv(self.output_submission, index=False)
 
-        #save tokenizer and (needed to predict future entries)
-        self.tok = tok
-        self.max_words = max_words
-        self.max_words_ky = max_words_ky
-        self.max_words_lc = max_words_lc
+
 
         #save the trained model to use again
         self.model = model
@@ -441,6 +454,8 @@ class Nlp_General:
         preds = self.nlpt._predict(self.nlpt.model, text_tx, kw_tx, lc_tx)
 
         return preds
+
+
 
 
 
