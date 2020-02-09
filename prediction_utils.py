@@ -447,6 +447,7 @@ def result_eva(loss, val_loss, acc, val_acc,file='result_eva.pdf'):
     plt.savefig('acc_'+file)
     #plt.show()
 
+#https://machinelearningmastery.com/save-load-keras-deep-learning-models/
 def save_model(keras_model, output_dir='saved_model'):
     '''
     save the nlp model

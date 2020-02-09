@@ -351,6 +351,7 @@ class Nlp_Tweets:
             pu.result_eva(history.history['loss'], history.history['val_loss'], history.history['accuracy'],
                           history.history['val_accuracy'])
         else:
+            #https://machinelearningmastery.com/save-load-keras-deep-learning-models/
             model = pu.load_model(self.load_past_model)
 
 
