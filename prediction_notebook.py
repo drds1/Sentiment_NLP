@@ -26,6 +26,7 @@ import matplotlib.pyplot as plt
 import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 import re
+import pickle
 # Input data files are available in the "../input/" directory.
 # For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
 
@@ -486,8 +487,23 @@ if __name__ == '__main__':
     test_text = list(test_df_in['text'])
     y.load_data(train_text= train_text, train_target= train_target,
                 test_text= test_text,
-                glove_file= './data/glove.6B.100d.txt')
-    #y.run()
-    #y.predict(['disaster strikes plague fire'])
-    #y.predict(["isn't it a lovely day today"])
+                glove_file= './data/non_tracked/glove.6B.100d.txt')
+    y.run()
+
+
+    #save the trained nn
+    # save simulation as pickle output
+    picklefile = '/data/non_tracked/trained_nn.pickle'
+    os.system('rm ' + picklefile)
+    pickle_out = open(picklefile, "wb")
+    pickle.dump(y, pickle_out)
+    pickle_out.close()
+
+
+    #load previous simulation
+    pickle_in = open(picklefile, "rb")
+    y = pickle.load(pickle_in)
+
+    y.predict(['disaster strikes plague fire'])
+    y.predict(["isn't it a lovely day today"])
 
