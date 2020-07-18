@@ -27,6 +27,7 @@ import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 import re
 import pickle
+import glob
 # Input data files are available in the "../input/" directory.
 # For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
 
@@ -458,26 +459,11 @@ class Nlp_General:
         return preds
 
 
-
-
-
-if __name__ == '__main__':
-    '''
-    #test nlp tweets project
-    x = Nlp_Tweets()
-    x.epochs = 3
-    x.validation_split = 0.2
-    x.batch_size = 64
-    x.load(train_file = './data/train.csv',
-           test_file = './data/test.csv',
-           glove_file = './data/glove.6B.100d.txt')
-    x.run()
-    #x.model.predict(new tweets)
-    '''
-
-    #test general project
-    train_df_in = pd.read_csv('./data/train.csv')
-    test_df_in = pd.read_csv('./data/test.csv')
+#test general project
+def test_disaster(recalc = True, train_file = './data/train.csv', test_file = './data/test.csv',
+                picklefile = './data/non_tracked/trained_nn.pickle'):
+    train_df_in = pd.read_csv(train_file)
+    test_df_in = pd.read_csv(test_file)
     y = Nlp_General()
     y.epochs = 2
     y.validation_split = 0.2
@@ -485,25 +471,94 @@ if __name__ == '__main__':
     train_text = list(train_df_in['text'])
     train_target = list(train_df_in['target'])
     test_text = list(test_df_in['text'])
-    y.load_data(train_text= train_text, train_target= train_target,
-                test_text= test_text,
-                glove_file= './data/non_tracked/glove.6B.100d.txt')
-    y.run()
-
-
-    #save the trained nn
-    # save simulation as pickle output
-    picklefile = '/data/non_tracked/trained_nn.pickle'
-    os.system('rm ' + picklefile)
-    pickle_out = open(picklefile, "wb")
-    pickle.dump(y, pickle_out)
-    pickle_out.close()
-
-
-    #load previous simulation
-    pickle_in = open(picklefile, "rb")
-    y = pickle.load(pickle_in)
-
+    if recalc is True:
+        y.load_data(train_text= train_text, train_target= train_target,
+                    test_text= test_text,
+                    glove_file= './data/non_tracked/glove.6B.100d.txt')
+        y.run()
+        #save the trained nn
+        # save simulation as pickle output
+        picklefile = picklefile
+        os.system('rm ' + picklefile)
+        pickle_out = open(picklefile, "wb")
+        pickle.dump(y, pickle_out)
+        pickle_out.close()
+    else:
+        #load previous simulation
+        pickle_in = open(picklefile, "rb")
+        y = pickle.load(pickle_in)
     y.predict(['disaster strikes plague fire'])
     y.predict(["isn't it a lovely day today"])
+
+def test_disaster(recalc = True, train_file = './data/train.csv', test_file = './data/test.csv',
+                picklefile = './data/non_tracked/trained_nn.pickle'):
+    train_df_in = pd.read_csv(train_file)
+    test_df_in = pd.read_csv(test_file)
+    y = run_nlp(train_df_in, test_df_in, recalc=recalc, picklefile=picklefile)
+    y.predict(['disaster strikes plague fire'])
+    y.predict(["isn't it a lovely day today"])
+
+def test_emails(recalc = True, train_file = './data/train.csv', test_file = './data/test.csv',
+                picklefile = './data/non_tracked/trained_nn.pickle'):
+    train_df_in = pd.read_csv(train_file)
+    test_df_in = pd.read_csv(test_file)
+    y = run_nlp(train_df_in, test_df_in, recalc=recalc, picklefile=picklefile)
+    y.predict(['disaster strikes plague fire'])
+    y.predict(["isn't it a lovely day today"])
+
+
+
+def run_nlp(train_df_in, test_df_in, recalc = True, picklefile = './data/non_tracked/trained_nn.pickle'):
+    y = Nlp_General()
+    y.epochs = 2
+    y.validation_split = 0.2
+    y.batch_size = 64
+    train_text = list(train_df_in['text'])
+    train_target = list(train_df_in['target'])
+    test_text = list(test_df_in['text'])
+    if recalc is True:
+        y.load_data(train_text= train_text, train_target= train_target,
+                    test_text= test_text,
+                    glove_file= './data/non_tracked/glove.6B.100d.txt')
+        y.run()
+        #save the trained nn
+        # save simulation as pickle output
+        picklefile = picklefile
+        os.system('rm ' + picklefile)
+        pickle_out = open(picklefile, "wb")
+        pickle.dump(y, pickle_out)
+        pickle_out.close()
+    else:
+        #load previous simulation
+        pickle_in = open(picklefile, "rb")
+        y = pickle.load(pickle_in)
+    return y
+
+
+def get_from_lots_of_files(search_string):
+    files = glob.glob(search_string)
+    data = []
+    for file in files:
+        text_file = open(file, "r", errors='replace')
+        lines = text_file.readlines()
+        data.append(''.join(lines))
+    return data
+
+
+if __name__ == '__main__':
+
+
+    #test on the tweet disaster
+    #test_disaster(recalc=True, train_file='./data/train.csv', test_file='./data/test.csv',
+    #              picklefile='./data/non_tracked/trained_nn.pickle')
+
+    #test on the email spam filter
+    non_spam = get_from_lots_of_files('./data/non_tracked/email_data/hamnspam/ham/*')
+    spam = get_from_lots_of_files('./data/non_tracked/email_data/hamnspam/spam/*')
+    data = pd.DataFrame({'text':non_spam+spam,'target':[0]*len(non_spam)+[1]*len(spam)})
+    data = data.sample(frac=1)
+    test_data = data.sample(frac=0.25)
+    train_data = data[~data.isin(test_data)].dropna()
+    run_nlp(train_data, test_data, recalc=True, picklefile='./data/non_tracked/trained_nn_email.pickle')
+
 
