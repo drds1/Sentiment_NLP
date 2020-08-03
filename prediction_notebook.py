@@ -289,7 +289,8 @@ class Nlp_Tweets:
 
         glove_file.close()
 
-        embedding_dim = 100
+        embedding_dim = max(tok.word_index.values()) + 1
+
         embedding_matrix = zeros((top_word, embedding_dim))
         for word, index in tok.word_index.items():
             embedding_vector = embeddings_dictionary.get(word)
