@@ -10,6 +10,7 @@ Load the train data
 df_train = pd.read_csv('./data/train.csv')
 X_train = list(df_train['text'])
 y_train = list(df_train['target'])
+y_train = pd.get_dummies(y_train).values
 
 
 '''
@@ -56,6 +57,49 @@ for i, word in tok_dict.items():
     # Record in matrix
     if vector is not None:
         embedding_matrix[i, :] = vector
+
+
+'''
+Setup the net
+'''
+nlabels = len(y_train[0])
+model_lstm = keras.Sequential()
+# initialise Ebedding layer num_words = len(idx_word) + 1 to deal with 0 padding
+# input_length is the number of words ids per sample e.g 28
+# NOT the sample size of the training data
+# you do not need to supply that info
+model_lstm.add(keras.layers.Embedding(input_dim=num_words,
+                                      input_length=X_train_seq_pad.shape[1],
+                                      output_dim=wordvec_dim,
+                                      weights=[embedding_matrix],
+                                      trainable=False,
+                                      mask_zero=True))
+
+# words which are not in the pretrained embeddings (with value 0) are ignored
+model_lstm.add(keras.layers.Masking(mask_value=0.0))
+
+# Recurrent layer
+model_lstm.add(keras.layers.LSTM(200, return_sequences=False))
+model_lstm.add(keras.layers.Dropout(0.4))
+# model_lstm.add(keras.layers.LSTM(28, return_sequences=True))
+# model_lstm.add(keras.layers.Dropout(0.2))
+# model_lstm.add(keras.layers.LSTM(28, return_sequences=True))
+# model_lstm.add(keras.layers.Dropout(0.2))
+# model_lstm.add(keras.layers.LSTM(28, return_sequences=False))
+
+# Output layer
+model_lstm.add(keras.layers.Dense(nlabels))
+model_lstm.add(keras.layers.Activation('softmax'))
+
+# Compile the model
+model_lstm.compile(
+    optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
+# model summary
+model_lstm.summary()
+
+##fit
+model_lstm.fit(X_train_seq_pad, y_train, epochs=5, batch_size=128)
 
 
 
