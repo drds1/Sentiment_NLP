@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a537002e-8cb8-4f69-a1c6-c871ef719159" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tweet_challenge.py" beforeDir="false" afterPath="$PROJECT_DIR$/tweet_challenge.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,7 +40,7 @@
       <workItem from="1596456055568" duration="2050000" />
       <workItem from="1596486420082" duration="143000" />
       <workItem from="1596536597024" duration="1943000" />
-      <workItem from="1596557496845" duration="2193000" />
+      <workItem from="1596557496845" duration="2271000" />
     </task>
     <servers />
   </component>

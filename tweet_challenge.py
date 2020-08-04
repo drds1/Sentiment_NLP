@@ -8,7 +8,7 @@ import utils
 Load the train data
 '''
 df_train = pd.read_csv('./data/train.csv')
-X_train = list(df_train['text'])
+X_train_raw = list(df_train['text'])
 y_train = list(df_train['target'])
 y_train = pd.get_dummies(y_train).values
 
@@ -17,7 +17,7 @@ y_train = pd.get_dummies(y_train).values
 tokenize the input X_train data
 '''
 tok = keras.preprocessing.text.Tokenizer(num_words=1000)
-tok.fit_on_texts(X_train)
+tok.fit_on_texts(X_train_raw)
 #summarise top words
 word_counts = pd.DataFrame(dict(tok.word_counts),index=['count']).transpose().sort_values(by='count',ascending=False)
 num_words = len(word_counts)
@@ -33,11 +33,10 @@ print(word_counts.tail(10))
 #print(tok.word_index)
 #print(tok.word_docs)
 # integer encode documents
-X_train_seq = tok.texts_to_sequences(X_train)
-max_sentence_len = max([max(a) for a in X_train_seq if len(a) > 0])
+X_train = tok.texts_to_sequences(X_train_raw)
+max_sentence_len = max([max(a) for a in X_train if len(a) > 0])
 #padd so all same length
-X_train_seq_pad = keras.preprocessing.sequence.pad_sequences(X_train_seq,
-                                                                     padding='post')
+X_train = keras.preprocessing.sequence.pad_sequences(X_train,padding='post')
 
 
 '''
@@ -69,7 +68,7 @@ model_lstm = keras.Sequential()
 # NOT the sample size of the training data
 # you do not need to supply that info
 model_lstm.add(keras.layers.Embedding(input_dim=num_words,
-                                      input_length=X_train_seq_pad.shape[1],
+                                      input_length=X_train.shape[1],
                                       output_dim=wordvec_dim,
                                       weights=[embedding_matrix],
                                       trainable=False,
@@ -99,7 +98,7 @@ model_lstm.compile(
 model_lstm.summary()
 
 ##fit
-model_lstm.fit(X_train_seq_pad, y_train, epochs=5, batch_size=128)
+model_lstm.fit(X_train, y_train, epochs=5, batch_size=128)
 
 
 
