@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a537002e-8cb8-4f69-a1c6-c871ef719159" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acc_result_eva.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/confusion_matrix.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/failures.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imdb_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loss_result_eva.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/nlp_disaster.h5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/output_submission.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prediction_notebook.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prediction_notebook.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prediction_utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/predictions_keras_2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scratch.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scratch_nlp_example.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target_count.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wordcloud.pdf" beforeDir="false" />
-    </list>
+    <list default="true" id="a537002e-8cb8-4f69-a1c6-c871ef719159" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,7 +36,7 @@
       <workItem from="1595870402380" duration="597000" />
       <workItem from="1596456055568" duration="2050000" />
       <workItem from="1596486420082" duration="143000" />
-      <workItem from="1596536597024" duration="509000" />
+      <workItem from="1596536597024" duration="813000" />
     </task>
     <servers />
   </component>
