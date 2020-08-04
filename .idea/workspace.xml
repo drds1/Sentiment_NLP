@@ -2,11 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a537002e-8cb8-4f69-a1c6-c871ef719159" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prediction_notebook.py" beforeDir="false" afterPath="$PROJECT_DIR$/prediction_notebook.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target_count.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/target_count.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wordcloud.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/wordcloud.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/acc_result_eva.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/confusion_matrix.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/failures.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/imdb_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loss_result_eva.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nlp_disaster.h5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_submission.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prediction_notebook.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prediction_notebook.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prediction_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/predictions_keras_2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scratch.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scratch_nlp_example.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target_count.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wordcloud.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +27,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="JupyterTrust" id="398ec5a9-378d-443c-8c37-8f8dc93c846f" />
   <component name="ProjectId" id="1fDhNJdKoSU6Ux1NqAqXmlT0KRn" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -39,22 +51,13 @@
       <updated>1580045543716</updated>
       <workItem from="1595758531172" duration="550000" />
       <workItem from="1595870402380" duration="597000" />
-      <workItem from="1596456055568" duration="1131000" />
+      <workItem from="1596456055568" duration="2050000" />
+      <workItem from="1596486420082" duration="143000" />
+      <workItem from="1596536597024" duration="509000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/scratch_nlp_example.py</url>
-          <line>11</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
