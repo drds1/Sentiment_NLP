@@ -40,10 +40,8 @@ print(word_counts.tail(10))
 #print(tok.word_docs)
 # integer encode documents
 X_train = tok.texts_to_sequences(X_train_raw)
-max_sentence_len = max([max(a) for a in X_train if len(a) > 0])
 #padd so all same length
 X_train = keras.preprocessing.sequence.pad_sequences(X_train,padding='post')
-
 
 '''
 Load word embeddings
@@ -102,13 +100,13 @@ model_lstm.compile(optimizer='adam', loss='mse', metrics=['accuracy'])
 model_lstm.summary()
 
 ##fit
-model_lstm.fit(np.array(X_train), np.array(y_train), epochs=50, batch_size=128)
+model_lstm.fit(np.array(X_train), np.array(y_train), epochs=5, batch_size=128)
 
 
 
 #predict on test data
 X_test = tok.texts_to_sequences(X_test_raw)
-X_test = keras.preprocessing.sequence.pad_sequences(X_test,padding='post',maxlen=max_sentence_len)
+X_test = keras.preprocessing.sequence.pad_sequences(X_test,padding='post',maxlen=X_train.shape[1])
 y_pred = model_lstm.predict(np.array(X_test))
 
 #pickle model output
