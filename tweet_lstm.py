@@ -64,7 +64,7 @@ for i, word in tok_dict.items():
 '''
 Setup the net
 '''
-nlabels = len(y_train[0])
+nlabels = len(np.unique(y_train))
 model_lstm = keras.Sequential()
 # initialise Ebedding layer num_words = len(idx_word) + 1 to deal with 0 padding
 # input_length is the number of words ids per sample e.g 28
