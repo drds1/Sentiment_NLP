@@ -3,14 +3,17 @@ import pandas as pd
 import keras
 import numpy as np
 import utils
+import os
+import pickle
+from sklearn.model_selection import train_test_split
 
 '''
-Load the train data
+Load the train data and split into train test sets
 '''
-df_train = pd.read_csv('./data/train.csv')
-X_train_raw = list(df_train['text'])
-y_train = list(df_train['target'])
-y_train = pd.get_dummies(y_train).values
+df = pd.read_csv('./data/train.csv')
+X = list(df['text'])
+y = list(df['target'])
+X_train_raw, X_test_raw, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
 
 '''
@@ -101,16 +104,16 @@ model_lstm.summary()
 model_lstm.fit(X_train, y_train, epochs=5, batch_size=128)
 
 
+#pickle model output
+picklefile = './models/lstm.pickle'
+os.system('rm ' + picklefile)
+pickle_out = open(picklefile, "wb")
+pickle.dump({'model':model_lstm,'X_train':X_train,'y_train':y_train}, pickle_out)
+pickle_out.close()
 
 
 
+#optional run K-fold cross validation to asses model performance
+#from benchmarking_models import run_cv
+#y_pred = run_cv(X_train, y_train)
 
-
-
-
-
-
-
-
-
-#test_file='./data/test.csv'
