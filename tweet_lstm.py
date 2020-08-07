@@ -101,7 +101,7 @@ model_lstm.compile(
 model_lstm.summary()
 
 ##fit
-model_lstm.fit(X_train, y_train, epochs=5, batch_size=128)
+model_lstm.fit(X_train, y_train, epochs=50, batch_size=128)
 
 
 #pickle model output
