@@ -14,7 +14,10 @@ df = pd.read_csv('./data/train.csv')
 X = list(df['text'])
 y = list(df['target'])
 X_train_raw, X_test_raw, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
-
+#only OHE if > 2 classes or want prob of each class 'softmax' output activation
+#Here just want 1 or 0
+#y_train = pd.get_dummies(y_train).values
+#y_test = pd.get_dummies(y_test).values
 
 '''
 tokenize the input X_train data
@@ -64,7 +67,6 @@ for i, word in tok_dict.items():
 '''
 Setup the net
 '''
-nlabels = len(np.unique(y_train))
 model_lstm = keras.Sequential()
 # initialise Ebedding layer num_words = len(idx_word) + 1 to deal with 0 padding
 # input_length is the number of words ids per sample e.g 28
@@ -90,12 +92,11 @@ model_lstm.add(keras.layers.Dropout(0.4))
 # model_lstm.add(keras.layers.LSTM(28, return_sequences=False))
 
 # Output layer
-model_lstm.add(keras.layers.Dense(nlabels))
-model_lstm.add(keras.layers.Activation('softmax'))
+model_lstm.add(keras.layers.Dense(1))
+model_lstm.add(keras.layers.Activation('sigmoid'))
 
 # Compile the model
-model_lstm.compile(
-    optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+model_lstm.compile(optimizer='adam', loss='mse', metrics=['accuracy'])
 
 # model summary
 model_lstm.summary()
