@@ -102,7 +102,7 @@ model_lstm.compile(optimizer='adam', loss='mse', metrics=['accuracy'])
 model_lstm.summary()
 
 ##fit
-model_lstm.fit(X_train, y_train, epochs=50, batch_size=128)
+model_lstm.fit(np.array(X_train), np.array(y_train), epochs=50, batch_size=128)
 
 
 #pickle model output
