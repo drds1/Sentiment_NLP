@@ -30,7 +30,7 @@ text_clf.fit(X_train, y_train)
 
 
 '''predict on test data'''
-y_pred = text_clf.predict(y_test)
+y_pred = text_clf.predict(X_test)
 
 
 '''pickle model output'''
