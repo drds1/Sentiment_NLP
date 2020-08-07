@@ -27,11 +27,18 @@ text_clf = Pipeline([('vect', CountVectorizer()),
                      ('clf', MultinomialNB()),])
 text_clf.fit(X_train, y_train)
 
-#pickle model output
+
+
+'''predict on test data'''
+y_pred = text_clf.predict(y_test)
+
+
+'''pickle model output'''
 picklefile = './models/naive_bayes.pickle'
 os.system('rm ' + picklefile)
 pickle_out = open(picklefile, "wb")
-pickle.dump({'model':text_clf,'X_train':X_train,'y_train':y_train}, pickle_out)
+pickle.dump({'model':text_clf,'X_train':X_train,'y_train':y_train,'X_test':X_test,'y_test':y_test,
+             'y_pred':y_pred}, pickle_out)
 pickle_out.close()
 
 

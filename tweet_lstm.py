@@ -105,11 +105,18 @@ model_lstm.summary()
 model_lstm.fit(np.array(X_train), np.array(y_train), epochs=50, batch_size=128)
 
 
+
+#predict on test data
+X_test = tok.texts_to_sequences(X_test_raw)
+X_test = keras.preprocessing.sequence.pad_sequences(X_test,padding='post',maxlen=max_sentence_len)
+y_pred = model_lstm.predict(np.array(X_test))
+
 #pickle model output
 picklefile = './models/lstm.pickle'
 os.system('rm ' + picklefile)
 pickle_out = open(picklefile, "wb")
-pickle.dump({'model':model_lstm,'X_train':X_train,'y_train':y_train}, pickle_out)
+pickle.dump({'model':model_lstm,'X_train':X_train,'y_train':y_train,
+             'X_test':X_test,'y_test':y_test,'y_pred':y_pred}, pickle_out)
 pickle_out.close()
 
 
