@@ -2,10 +2,10 @@
 
 These notebooks perform sentiment analysis on a series of tweets pertaining either to various disasters worldwide or mundane day-to-day benign tweets. The goal is to train a model to tell them apart. The notebooks below trial 2 approaches:
 
-1) Naive Bayes Classifier
+1) [Naive Bayes Classifier](https://github.com/dstarkey23/disaster_nlp/blob/master/tweet_nbc.ipynb)
 The Naive Bayes classifier consider occurence counts of words within each class and multiplies occurence probabilities of each word together assuming words are independent of one-another. This 'bag-of-words' assumption is modified slightly using the 'term frequency' and 'inverse document frequency' transformations to down-weight overly common words (e.g. 'the' and 'and'), and to normalise word counts for input samples of different word lengths. 
 
-2) Long-Short-Term Memory Neural Network
+2) [Long-Short-Term Memory Neural Network](https://github.com/dstarkey23/disaster_nlp/blob/master/tweet_lstm.ipynb)
 LSTMS have the advantage over Naive Bayes classifiers in that they are able to contextualise a word based on where it appears in a sequence (e.g. 'Not Bad' can be interpreted differently to 'Bad'). They offer an advancement over recurrent neural nets in that while both have memory of previous words in the sequence, LSTM's have a longer term memory and can pull context from many words ago. They are often referred to as 'fancy' RNN's.
 
 
