@@ -43,7 +43,7 @@ pickle_out.close()
 Optional following sections can be performed here or 
 reserved for benchmarking with NB classifier
 '''
-perform_fit = False
+perform_fit = True
 if perform_fit:
     ''' Fit the model'''
     text_clf.fit(X_train, y_train)
