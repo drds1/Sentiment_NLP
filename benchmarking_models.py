@@ -1,4 +1,4 @@
-from sklearn.cross_validation import KFold
+from sklearn.model_selection import KFold
 import pickle
 import numpy as np
 import os
@@ -8,11 +8,12 @@ Build a K-fold cross validation tool compare models
 
 def run_cv(X, y, clf_class, **kwargs):
     # Construct a kfolds object
-    kf = KFold(len(y), n_folds=3, shuffle=True)
+    kf = KFold(n_splits=3, shuffle=True)
+    kf.get_n_split(len(y))
     y_pred = y.copy()
 
     # Iterate through folds
-    for train_index, test_index in kf:
+    for train_index, test_index in kf.split(X):
         X_train, X_test = X[train_index], X[test_index]
         y_train = y[train_index]
         # Initialize a classifier with key word arguments
@@ -38,8 +39,8 @@ def perform_benchmarking():
         model_meta['X_test'].append(pickle_in['X_test'])
         model_meta['y_test'].append(pickle_in['y_test'])
         model_meta['kwargs'].append(pickle_in['kwargs'])
-        X = np.append(pickle_in['X_train'].values, pickle_in['X_test'].values)
-        y = np.append(pickle_in['y_train'].values, pickle_in['y_test'].values)
+        X = np.array(pickle_in['X_train'] + pickle_in['X_test'])
+        y = np.array(pickle_in['y_train'] + pickle_in['y_test'])
         y_pred = run_cv(X, y, pickle_in['model'], **pickle_in['kwargs'])
         model_meta['y_pred'].append(y_pred)
 
