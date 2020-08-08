@@ -21,20 +21,15 @@ def run_cv(X, y, clf_class, **kwargs):
         y_pred[test_index] = clf.predict(X_test)
     return y_pred
 
-
-
-if __name__ == '__main__':
-    '''
-    Load previously fitted models
-    '''
+def perform_benchmarking():
     model_paths = ['./models/naive_bayes.pickle',
-              './models/lstm.pickle']
+                   './models/lstm.pickle']
     model_meta = {'model': [],
-             'X_train': [],
-             'y_train': [],
-             'X_test': [],
-             'y_test': [],
-             'kwargs':[]}
+                  'X_train': [],
+                  'y_train': [],
+                  'X_test': [],
+                  'y_test': [],
+                  'kwargs': []}
     for m in model_paths:
         pickle_in = pickle.load(open(m, "rb"))
         model_meta['model'].append(pickle_in['model'])
@@ -48,12 +43,22 @@ if __name__ == '__main__':
         y_pred = run_cv(X, y, pickle_in['model'], **pickle_in['kwargs'])
         model_meta['y_pred'].append(y_pred)
 
-    #save benchmarking results
+    return model_meta
+
+if __name__ == '__main__':
+    '''
+    Perform K-fold CV on previously fitted models
+    '''
+    model_meta = perform_benchmarking()
+    # save benchmarking results
     picklefile = 'benchmarking_model_predictions.pickle'
     os.system('rm ' + picklefile)
     pickle_out = open(picklefile, "wb")
     pickle.dump(model_meta, pickle_out)
     pickle_out.close()
+
+
+
 
 
 
