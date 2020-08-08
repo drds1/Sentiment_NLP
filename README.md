@@ -9,7 +9,7 @@ The Naive Bayes classifier consider occurence counts of words within each class 
 LSTMS have the advantage over Naive Bayes classifiers in that they are able to contextualise a word based on where it appears in a sequence (e.g. 'Not Bad' can be interpreted differently to 'Bad'). They offer an advancement over recurrent neural nets in that while both have memory of previous words in the sequence, LSTM's have a longer term memory and can pull context from many words ago. They are often referred to as 'fancy' RNN's.
 
 
-The `benchmarking_models.py` script performs 4-fold cross validation on the two methods and uses an ROC AUC analysis to bechmark the performance of the classifiers against each other.
+The [benchmarking_models.py](https://github.com/dstarkey23/disaster_nlp/blob/master/benchmarking_models.py) script performs 3-fold cross validation on the two methods and uses an ROC AUC analysis to bechmark the performance of the classifiers against each other.
 
 ## Data Source:
 The labelled tweet dataset is part of a [kaggle competition](https://www.kaggle.com/c/nlp-getting-started) with the objectives above.  
