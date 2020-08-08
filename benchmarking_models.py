@@ -3,6 +3,7 @@ import pickle
 import numpy as np
 import os
 from sklearn import metrics
+import matplotlib.pylab as plt
 
 '''
 Build a K-fold cross validation tool compare models
@@ -35,6 +36,7 @@ def perform_benchmarking():
     model_paths = ['./models/naive_bayes.pickle',
                    './models/lstm.pickle']
     model_meta = {'model': [],
+                  'name':[],
                   'X_train': [],
                   'y_train': [],
                   'X_test': [],
@@ -50,6 +52,7 @@ def perform_benchmarking():
         model_meta['X_test'].append(pickle_in['X_test'])
         model_meta['y_test'].append(pickle_in['y_test'])
         model_meta['kwargs'].append(pickle_in['kwargs'])
+        model_meta['name'].append(pickle_in['model_name'])
         if type(pickle_in['X_train']) == np.ndarray:
             X = np.vstack([np.array(pickle_in['X_train']), np.array(pickle_in['X_test'])])
         else:
@@ -75,7 +78,7 @@ if __name__ == '__main__':
     '''
     Perform K-fold CV on previously fitted models
     '''
-    model_meta = perform_benchmarking()
+    #model_meta = perform_benchmarking()
 
     '''
     Load benchmarking results
@@ -86,12 +89,23 @@ if __name__ == '__main__':
     '''
     construct the roc curve for both models
     '''
+    fig = plt.figure()
+    ax1 = fig.add_subplot(111)
     for i in range(len(model_meta['X_train'])):
         y_test = model_meta['y_test_concat'][i]
         y_pred = model_meta['y_pred_concat'][i]
         fpr, tpr, thresholds = metrics.roc_curve(y_test, y_pred, pos_label=1)
         auc = metrics.auc(fpr, tpr)
         print('ROC curve AUC = ' + str(auc))
+        idx = np.argsort(fpr)
+        fpr = fpr[idx]
+        tpr = tpr[idx]
+        ax1.plot(fpr,tpr,label=str(model_meta['name'][i])+'\nAUC:'+str(np.round(auc,2)))
+    ax1.set_xlabel('False Positive Rate')
+    ax1.set_ylabel('True Positive Rate')
+    plt.tight_layout()
+    plt.legend()
+    plt.savefig('ROC_curve_model_comparison.pdf')
 
 
 

@@ -31,6 +31,7 @@ picklefile = './models/naive_bayes.pickle'
 os.system('rm ' + picklefile)
 pickle_out = open(picklefile, "wb")
 pickle.dump({'model':text_clf,
+             'model_name':'Naive Bayes',
              'X_train':X_train,
              'y_train':y_train,
              'X_test':X_test,

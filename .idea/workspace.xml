@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a537002e-8cb8-4f69-a1c6-c871ef719159" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/benchmarking_model_predictions.pickle" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/benchmarking_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/benchmarking_models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/lstm.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/models/lstm.pickle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/naive_bayes.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/models/naive_bayes.pickle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tweet_lstm.py" beforeDir="false" afterPath="$PROJECT_DIR$/tweet_lstm.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tweet_nbc.py" beforeDir="false" afterPath="$PROJECT_DIR$/tweet_nbc.py" afterDir="false" />
     </list>
@@ -48,7 +48,7 @@
       <workItem from="1596746006894" duration="783000" />
       <workItem from="1596802804662" duration="7218000" />
       <workItem from="1596883550194" duration="1889000" />
-      <workItem from="1596890435580" duration="5326000" />
+      <workItem from="1596890435580" duration="6421000" />
     </task>
     <servers />
   </component>

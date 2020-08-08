@@ -112,8 +112,8 @@ model_lstm.summary()
 picklefile = './models/lstm.pickle'
 os.system('rm ' + picklefile)
 pickle_out = open(picklefile, "wb")
-kwargs = {'epochs':1,'batch_size':128}
-pickle.dump({'model':model_lstm,'X_train':X_train,'y_train':y_train,
+kwargs = {'epochs':10,'batch_size':128}
+pickle.dump({'model':model_lstm,'model_name':'LSTM','X_train':X_train,'y_train':y_train,
              'X_test':X_test,'y_test':y_test,'kwargs':kwargs}, pickle_out)
 pickle_out.close()
 
