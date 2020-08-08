@@ -25,32 +25,35 @@ c- train the naive bayes classifier
 text_clf = Pipeline([('vect', CountVectorizer()),
                      ('tfidf', TfidfTransformer()),
                      ('clf', MultinomialNB()),])
-text_clf.fit(X_train, y_train)
 
-
-
-'''predict on test data'''
-y_pred = text_clf.predict(X_test)
-
-
-'''pickle model output'''
+'''pickle model output for benchmarking'''
 picklefile = './models/naive_bayes.pickle'
 os.system('rm ' + picklefile)
 pickle_out = open(picklefile, "wb")
-pickle.dump({'model':text_clf,'X_train':X_train,'y_train':y_train,'X_test':X_test,'y_test':y_test,
-             'y_pred':y_pred}, pickle_out)
+pickle.dump({'model':text_clf,'X_train':X_train,'y_train':y_train,'X_test':X_test,'y_test':y_test}, pickle_out)
 pickle_out.close()
 
 
+'''
+Optional following sections can be performed here or 
+reserved for benchmarking with NB classifier
+'''
+perform_fit = False
+if perform_fit:
+    ''' Fit the model'''
+    text_clf.fit(X_train, y_train)
 
 
-''' 4 analyse performance '''
-y_pred = text_clf.predict(X_test)
-fpr, tpr, thresholds = metrics.roc_curve(y_test, y_pred, pos_label=1)
-auc = metrics.auc(fpr, tpr)
-print('ROC curve AUC = '+str(auc))
+    '''predict on test data'''
+    y_pred = text_clf.predict(X_test)
+
+    ''' 4 analyse performance '''
+    y_pred = text_clf.predict(X_test)
+    fpr, tpr, thresholds = metrics.roc_curve(y_test, y_pred, pos_label=1)
+    auc = metrics.auc(fpr, tpr)
+    print('ROC curve AUC = '+str(auc))
 
 
-#optional run K-fold cross validation to asses model performance
-#from benchmarking_models import run_cv
-#y_pred = run_cv(X_train, y_train)
+    #optional run K-fold cross validation to asses model performance
+    #from benchmarking_models import run_cv
+    #y_pred = run_cv(X_train, y_train)

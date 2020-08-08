@@ -30,12 +30,18 @@ if __name__ == '__main__':
               './models/lstm.pickle']
     model_meta = {'model': [],
              'X_train': [],
-             'y_train': []}
+             'y_train': [],
+             'X_test': [],
+             'y_test': []}
     for m in model_paths:
         pickle_in = pickle.load(open(m, "rb"))
         model_meta['model'].append(pickle_in['model'])
         model_meta['X_train'].append(pickle_in['X_train'])
         model_meta['y_train'].append(pickle_in['y_train'])
+        model_meta['X_test'].append(pickle_in['X_test'])
+        model_meta['y_test'].append(pickle_in['y_test'])
+
+        y_pred = run_cv(X, y, clf_class, **kwargs)
 
 
 
