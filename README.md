@@ -28,5 +28,8 @@ Despite the undertraining, we see 10 epochs of LSTM training to be sufficient to
 
 ![](https://github.com/dstarkey23/disaster_nlp/blob/master/ROC_curve_model_comparison.png)
 
+A final word on interpreting the results here. Both our classifiers return the probability of a tweet belonging to the positive class. It is up to the user to determine the threshold probability at which to consider a tweet positive or negative. The ROC curve above trials several threshold probabilities (from 0.05 to 1 in 0.05 steps), recalculates the true positive and false positive rates and plots this as a point on the ROC curve. Traditionally, the threshold probability corresponding to the uppermost-left part of the curve is chosen as optimum (i.e the highest true positive but lowest false positive setting). In this case, the LSTM is expected to correctly identify 80pc of tweets, with a false positive rate of around 20pc. Further training epochs are expected to improve this subject to careful monitoring of training and test loss metrics to check for overfit.
+
+Using the ROC curve above, we can choose a threshold probability to achieve the corresponding Depending on our use case (whether sensitivity or specificity is more important) we can pick a point on the ROC curve above and use the corresponding threshold probability 
 
 
