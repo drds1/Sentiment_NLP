@@ -9,17 +9,19 @@ Build a K-fold cross validation tool compare models
 def run_cv(X, y, clf_class, **kwargs):
     # Construct a kfolds object
     kf = KFold(n_splits=3, shuffle=True)
-    kf.get_n_split(len(y))
     y_pred = y.copy()
+
 
     # Iterate through folds
     for train_index, test_index in kf.split(X):
         X_train, X_test = X[train_index], X[test_index]
         y_train = y[train_index]
         # Initialize a classifier with key word arguments
-        clf = clf_class(**kwargs)
-        clf.fit(X_train, y_train)
-        y_pred[test_index] = clf.predict(X_test)
+        clf_class.fit(X_train, y_train,**kwargs)
+        yp = clf_class.predict(X_test)
+        if len(np.shape(yp)) > 1:
+            yp = yp[:,0]
+        y_pred[test_index] = yp
     return y_pred
 
 def perform_benchmarking():
@@ -30,6 +32,7 @@ def perform_benchmarking():
                   'y_train': [],
                   'X_test': [],
                   'y_test': [],
+                  'y_pred': [],
                   'kwargs': []}
     for m in model_paths:
         pickle_in = pickle.load(open(m, "rb"))
@@ -39,8 +42,14 @@ def perform_benchmarking():
         model_meta['X_test'].append(pickle_in['X_test'])
         model_meta['y_test'].append(pickle_in['y_test'])
         model_meta['kwargs'].append(pickle_in['kwargs'])
-        X = np.array(pickle_in['X_train'] + pickle_in['X_test'])
-        y = np.array(pickle_in['y_train'] + pickle_in['y_test'])
+        if type(pickle_in['X_train']) == np.ndarray:
+            X = np.vstack([np.array(pickle_in['X_train']), np.array(pickle_in['X_test'])])
+        else:
+            X = np.array(pickle_in['X_train'] + pickle_in['X_test'])
+        if type(pickle_in['y_train']) == np.ndarray:
+            y = np.vstack([np.array(pickle_in['y_train']), np.array(pickle_in['y_test'])])
+        else:
+            y = np.array(pickle_in['y_train'] + pickle_in['y_test'])
         y_pred = run_cv(X, y, pickle_in['model'], **pickle_in['kwargs'])
         model_meta['y_pred'].append(y_pred)
 
