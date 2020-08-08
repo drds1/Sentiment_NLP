@@ -30,7 +30,12 @@ text_clf = Pipeline([('vect', CountVectorizer()),
 picklefile = './models/naive_bayes.pickle'
 os.system('rm ' + picklefile)
 pickle_out = open(picklefile, "wb")
-pickle.dump({'model':text_clf,'X_train':X_train,'y_train':y_train,'X_test':X_test,'y_test':y_test}, pickle_out)
+pickle.dump({'model':text_clf,
+             'X_train':X_train,
+             'y_train':y_train,
+             'X_test':X_test,
+             'y_test':y_test,
+             'kwargs':{}}, pickle_out)
 pickle_out.close()
 
 

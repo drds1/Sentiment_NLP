@@ -112,8 +112,9 @@ model_lstm.summary()
 picklefile = './models/lstm.pickle'
 os.system('rm ' + picklefile)
 pickle_out = open(picklefile, "wb")
+kwargs = {'epochs':5,'batch_size':128}
 pickle.dump({'model':model_lstm,'X_train':X_train,'y_train':y_train,
-             'X_test':X_test,'y_test':y_test}, pickle_out)
+             'X_test':X_test,'y_test':y_test,'kwargs':kwargs}, pickle_out)
 pickle_out.close()
 
 
@@ -121,7 +122,7 @@ pickle_out.close()
 ##optional fit here or reserve for benchmarking
 perform_fit = False
 if perform_fit:
-    model_lstm.fit(np.array(X_train), np.array(y_train), epochs=5, batch_size=128)
+    model_lstm.fit(np.array(X_train), np.array(y_train), **kwargs)
     y_pred = model_lstm.predict(np.array(X_test))
 
 

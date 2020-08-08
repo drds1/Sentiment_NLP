@@ -1,6 +1,7 @@
 from sklearn.cross_validation import KFold
 import pickle
-
+import numpy as np
+import os
 '''
 Build a K-fold cross validation tool compare models
 '''
@@ -32,7 +33,8 @@ if __name__ == '__main__':
              'X_train': [],
              'y_train': [],
              'X_test': [],
-             'y_test': []}
+             'y_test': [],
+             'kwargs':[]}
     for m in model_paths:
         pickle_in = pickle.load(open(m, "rb"))
         model_meta['model'].append(pickle_in['model'])
@@ -40,8 +42,19 @@ if __name__ == '__main__':
         model_meta['y_train'].append(pickle_in['y_train'])
         model_meta['X_test'].append(pickle_in['X_test'])
         model_meta['y_test'].append(pickle_in['y_test'])
+        model_meta['kwargs'].append(pickle_in['kwargs'])
+        X = np.append(pickle_in['X_train'].values, pickle_in['X_test'].values)
+        y = np.append(pickle_in['y_train'].values, pickle_in['y_test'].values)
+        y_pred = run_cv(X, y, pickle_in['model'], **pickle_in['kwargs'])
+        model_meta['y_pred'].append(y_pred)
 
-        y_pred = run_cv(X, y, clf_class, **kwargs)
+    #save benchmarking results
+    picklefile = 'benchmarking_model_predictions.pickle'
+    os.system('rm ' + picklefile)
+    pickle_out = open(picklefile, "wb")
+    pickle.dump(model_meta, pickle_out)
+    pickle_out.close()
+
 
 
 
