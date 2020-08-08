@@ -26,7 +26,7 @@ It is expected the the LSTM outperforms the Naive Bayes Classifier. This appears
 10 epochs of training on a macbook pro. It should be noted at this point the LSTM appeared still unconverged. Larger machines recommended to exhaustively optimise the network.
 Despite the undertraining, we see 10 epochs of LSTM training to be sufficient to outperform the Naive Bayes Classifier. Model performance is quantified by the area under the ROC curve below. A theoretical perfect classifier would return an area of 1.
 
-
+![]('./ROC_curve_model_comparison.png')
 
 
 

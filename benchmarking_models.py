@@ -105,7 +105,7 @@ if __name__ == '__main__':
     ax1.set_ylabel('True Positive Rate')
     plt.tight_layout()
     plt.legend()
-    plt.savefig('ROC_curve_model_comparison.pdf')
+    plt.savefig('ROC_curve_model_comparison.png')
 
 
 
