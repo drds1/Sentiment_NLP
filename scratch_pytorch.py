@@ -8,6 +8,8 @@ import os
 import pickle
 from sklearn.model_selection import train_test_split
 
+#pytorch implementation of sentiment analysis challenge
+#https://towardsdatascience.com/how-to-code-a-simple-neural-network-in-pytorch-for-absolute-beginners-8f5209c50fdd
 
 class DisasterDataset(Dataset):
 

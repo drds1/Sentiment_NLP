@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a537002e-8cb8-4f69-a1c6-c871ef719159" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scratch_pytorch.py" beforeDir="false" afterPath="$PROJECT_DIR$/scratch_pytorch.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +48,7 @@
       <workItem from="1598121358522" duration="271000" />
       <workItem from="1598717955168" duration="1173000" />
       <workItem from="1600782227126" duration="612000" />
-      <workItem from="1602527798075" duration="1139000" />
+      <workItem from="1602527798075" duration="1239000" />
     </task>
     <servers />
   </component>
